@@ -1,0 +1,16 @@
+i => insert
+x => delete character
+o => open new line
+r => replace character
+a => append
+u => undo
+d => delete multipart (dw,word),(dd,line)
+j => Join the lines
+g => go to line (ln : number)
+yanc yanc => format y + y it will coppy a line and can paste using [p] (yw , yy) 
+p => paste required yanc yanc 
+search => in cpmmand mode type : /[target] n=> next , N => previous 
+$ => end of he line 
+^ => start of the line 
+. => repeatlast command
+a => append to end of the line

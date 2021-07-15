@@ -1,0 +1,34 @@
+mongo --shell => will open mongodb shell to write db commands
+show dbs => will help 
+use [db name]; => Create this database if it is not exists
+db; => will be use after create a database for enter into it to run our commands
+[Important]:{
+when were inside of a database we can cal the current database db and it's not nessesary to cal it s name every time
+}
+db.DropDatabase() => will drop selecteD database
+db.createCollections([collectionname])
+show collections => will show collections of a db
+db.[collectionname].insert({[data]})
+db.[collectionname].insertMany([{data},{data}])
+db.[collectionname].find() => show datas of a collection
+db.[collectionname].find().pretty() => do same job but with style
+db.[collectionname].find({condtions}) => where statement
+db.[collectionname].find({condtions}).sort() 
+db.[collectionname].find({condtions}).sort([cloumn],{1: ascending},{-1: descending}) 
+db.[collectionname].count()
+db.colLectionname].find().limit([count]) => how dmany result will be shown
+db.[collectionname].find().forEach(function(el){print(el)})
+db.[collectionname].update({datapicker},{date}) => will update a record to exactly what you entered
+db.[collectionname].update({datapicker},{date}{upsert = true }) => update a record if record doesnt exist will create a new one
+db.[collectionname].update({datapicker},{ $set: { data }  }) => will keep current record datas and update exactly the cloumn you want to change
+db.[collectionname].update({datapicker},{ $inc: { data : intger }  }) => will increment numeric types
+db.[collectionname].update({datapicker},{ $rename : { columnname : new_columnname}}) => will update column name
+db.[collectionname].remove({datapicker}) => delete record/records
+db.posts.find( { comments : {$elemMatch  : {  username : "asghar"   }  }}  ).pretty() => will check with word
+db.[collectionname].createIndex({columnname : [index_type]}) => index types : text : string ,
+db.posts.find( { $text : { $search : "\"word we searching for\""    } }) => allow us to search to collection by index value
+db.[collectionname].find({columnname:{$gt : number}}) => will search numerci columns for greater than value of inserted number
+db.[collectionname].find({columnname:{$gte : number}}) => will search numerci columns for greater than or equal value of inserted number
+db.[collectionname].find({columnname:{$lt : number}}) => will search numerci columns for less than value of inserted number
+db.[collectionname].find({columnname:{$lte : number}}) => will search numerci columns for less than or equal value of inserted number
+

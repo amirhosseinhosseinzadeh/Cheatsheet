@@ -1,0 +1,13 @@
+ctrl + b + % => devide screen vertically
+ctrl + b + " => devide screen horizontally
+ctrl + b + arrows(hold) => resize current terminal 
+ctrl + b + arrows => jump to the next terminal
+ctrl + b + t => change terminal to time
+ctrl + b + z => zoom and zoombac
+ctrl + b + c => create a new tab inside current terminal
+ctrl + b + tabnumber => can change currnt tab
+ctrl + b + d => detach current tab
+tmux att -t [sessionnumber] => after detaching tmux can use this to reattach it again
+ctrl + b + : command 
+ctrl + b + :setw synchoriztion on => it will set all trminals to read one keboard commands 
+14:0014:0014:0014:0014:0014:0014:0014:0014:0014:0014:0014:0014:0014:00
