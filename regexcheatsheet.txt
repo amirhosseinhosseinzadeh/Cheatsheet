@@ -1,0 +1,14 @@
+* => not exist or exist many
++ => one or more exists
+? => not exist or exist one 
+\d => decimal digit
+\D => non digit characters
+\s => white space characters
+\S => non white spaces
+\w => words alpha numerics
+\W => non word non alpha numericals
+^ => at first of the line 
+$ => at end of the line
+[] => compare with values exist in brackets
+{4} => Count 4 o f the specific char 
+{1,4} => atleast 1 and at max 4 of specic char
