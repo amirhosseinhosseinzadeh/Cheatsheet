@@ -19,7 +19,7 @@ services :
     volumes: 
       - elasticsearch-data-volume:/usr/share/elasticsearch/data
     ports:
-      - 9200-9200
+      - 9200:9200
       - 9300:9300
   kibana:
     container_name: kibana_sample
