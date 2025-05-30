@@ -1,0 +1,268 @@
+rust macros like [println!()]
+
+commands:
+cargo new
+cargo build
+cargo clean
+cargo run
+cargo check
+
+mutable/immutable
+shadowing
+
+return type [Result] containts two const err, ok
+
+
+data types {
+	subset:scalar,
+	compund
+}
+
+scalar represent a single value which contains =>
+* integer
+* floating-point numbers
+* boolean
+* character
+
+
+for signed integers range would be => from -(2 ^ ( n - 1) ) to 2 ^ (n - 1) - 1
+for unisigned integers range would be  => from 0 to 2 ^ n - 1
+
+**n stands for bit**
+
+we also have isize and usize which depends on cpu arch type (x64 , x32)
+
+f32 and f64 are for floating point numbers
+boolean
+char
+--------------------
+compound types
+rust have 2 primitive comound type
+tuple and array
+
+tples are a general way to store multiple object with a fixed length size and one it created it cant grow or shrink in size 
+let tup : (i32, f.64) = (1 , 2.1);
+
+accessing members =>
+let (x,y) = tup;
+or
+tup.0  //1
+tup.1  //2.1
+
+next one array which unlike the tuple all elements of array is from the same type
+let arr = [1,2,3,4,5];
+or
+let arr : [i32 ; 3] = [0 , 1 , 2];
+the 3 here is the length of array which is fixed
+if trying to get item using [idx] way and incoming index be higher or equal to array length the program will panic
+
+functions
+
+fn main(){}
+fn test(value : i32){}
+
+we have 2 type of functions in rust
+
+statements -> return nothing
+like 
+let y = 2 + 3;
+you cant go like 
+let y = (let x = 2 +3 );
+because inside of paranthesies we have a statement which retuns nothing unlike c++ or rust etc..
+
+expression -> evaluate to a result value
+
+Calling a function is an expression. 
+Calling a macro is an expression. 
+A new scope block created with curly brackets is an expression
+
+let x = {
+	let y = 5;
+	5 + 1
+} // 6
+
+as u can see it is a expression with a return value and as u notice we didnt end assignment with ";"  because it would use for statements
+
+fn main(){
+	let x = another_method(); // 5
+}
+
+fn another_function() -> i32{
+	5
+}
+
+if conditions have not much diff with others
+
+if 1 == 2 && 3 ==4 { //action }
+
+loops 
+
+loop{
+	//do something
+	if true{
+		break;
+	}
+	if false{
+		continue;
+	}
+}
+
+if having two or more inside loop we can specify them with lable and break/continue th loop on target as below =>
+
+let mut d = 3;
+'outer_loop : loop{
+	loop{
+		if d == 10{
+			break 'outer_loop;
+		}
+		d = d + 1;
+	}
+}
+
+in this sample if we dont specify the outer_loop the break will apply on the unlabled loop so basically we have an infinite loop which at some place  
+does nothing and wont end neither
+
+while loop =>
+
+let mut num = 3;
+while num > 0 {
+	num = num -1;
+}
+
+for loop =>
+
+let arr = [1,2,4];
+for item in arr {
+	// do something
+}
+
+range =>
+
+for item in (1..4).
+
+
+Ownership is Rust’s most unique feature and has deep implications for the rest of the language. 
+It enables Rust to make memory safety guarantees without needing a garbage collector, so it’s important to understand how ownership works.
+
+related features: borrowing, slices, and how Rust lays data out in memory
+
+ownership rules:
+* each value in rust has an owner
+* there can only be one owner in runtime
+* when the owner goes out of scope the value will be dropped
+
+the ways we can change ownership of an object 
+first of all we need to know for scalar types owner ship wont change in below cases because it use deep copy instead of shallow copy
+
+assignin to another variable =>
+
+let s = String::from("ss");
+let s2 = s;
+println!("{s}"); // raise compile time error
+
+passing to a function =>
+
+let s = String::from("123");
+show(s);
+println!("{}",s); // raise compile time error
+
+fn show(val : String){
+	//do something
+}
+
+return also move the ownership
+
+let val = take_string();
+println!("{val}");
+
+fn take_string() -> String{
+	let s = String::from("12345");
+	s
+}
+
+this can get very annoying because each time we pass an object like mentioned we need to some how retun it so it won go out of scope and 
+being automatically droped 
+
+let  str = String::from("test");
+let (str2,len) = calc_ln(str); // ownership moved so str is inaccessible
+println!("{}" , str2);
+
+fn calc_ln(s : String) -> (String , usize){
+	let size = s.len();
+	(s, size)
+}
+
+to remove this disaster we can work with borrowing
+
+borrowing
+
+let str = String::from("1234");
+let size = calc_ln(&str);// owner ship didnt moved to new scop hence str is still valid to use
+println!("{}" , str);
+
+fn calc_ln(s : &String) -> usize{
+	let size = s.len();
+	size
+}
+
+it's called referncing which we have a oppoiste approach which we call it dereferencing
+which use dereference operator    "*"
+
+mutable reference =>
+
+let mut s: String = String::from("hello");
+add(&mut s);
+println!("{}",s);
+
+fn add(str : &mut String){
+	str.push_str(" world");
+}
+
+
+mutable references have one restriction which is if we cant have two mutable reference from a single value 
+
+let mut s = String::from("1234");
+let r = &mut s;
+let d = &mut s; // violation
+println!("{},{}",r,d);
+
+rust compiler also prevent from unsafe memory allocation which refer as dangling reference
+it means refereing to a part of memory which already have released
+
+let s  = return_val();
+
+fn return_val() -> &String{
+	let s = String::new();
+	&s // compile time err
+}
+
+Slice 
+
+Slices let you reference a contiguous sequence of elements in a collection rather than the whole collection. A slice is a kind of reference, 
+so it does not have ownership.
+
+consider we have code below
+
+let s =String::from("private field");
+
+we know the first index of a char with empty space is "7"
+so in case we want to write program which sperate words by ' ' free space char we would store these indexes like below 
+
+let idx : usize = 7;
+
+but what if string got manipulate but another part of program
+
+s.clear();
+
+in that case we wont get any compile error but we surely have a runtime one
+there for we can use slices
+
+let slice = &s[0..7]; // private
+
+or the whole phrase
+
+let slice = &s[0..s.len()]; 
+let slice2 = &s[..]; // private field
+
+slice can be apply to all type of collections like Vec , array , string, etc..
+
