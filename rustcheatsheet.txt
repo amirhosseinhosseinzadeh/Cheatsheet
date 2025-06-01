@@ -266,3 +266,99 @@ let slice2 = &s[..]; // private field
 
 slice can be apply to all type of collections like Vec , array , string, etc..
 
+struct
+
+structs are the way we can group up a couple of values which beside eachother would be meaningfull
+enums and struct are the building blocks of creating new custom types for a business
+
+there are some sort of functions in enums which we call them methods
+
+defining a structure =>
+
+struct User {
+	active : bool,
+	username : String,
+	email : String,
+	sign_in_count : u64,
+}
+
+decalre user =>
+
+let user = User{
+	active : true,
+	username : String::from("john"),
+	email : String::from("jhon@hotmail.com"),
+	sign_in_count : 0
+}
+
+accessing the value of fields =>
+
+let user_is_active : bool = user.active;
+
+if the instance is mutable we can modify it fields =>
+
+let mut user = User{
+	active : true,
+	username : String::from("john"),
+	email : String::from("jhon@hotmail.com"),
+	sign_in_count : 0
+}
+
+//toggle active
+user.active = !user.active;
+
+declare a builder function for struct =>
+
+fn create_user(username : String, email : String) -> User{
+	User{
+		username : username,
+		email : email,
+		active : true,
+		sign_in_count : 1
+	}
+}
+
+declare a builder function using field init short-hand =>
+
+fn create_user(username : String, email: String) -> User{
+	User{
+		username,
+		active : true,
+		email,
+		sign_in_count : 1
+	}
+}
+
+
+Note : an instance of enum whether is mutable or immutable and we cant spefiy to some part 
+be opposite in modification access
+
+now consider we want to add a new instance of user to the scope with a smal modification, we can go like this =>
+
+let user2 = User {
+    active: user1.active,
+    username: user1.username,
+    email: String::from("another@example.com"),
+    sign_in_count: user1.sign_in_count,
+};
+
+or a better approach is =>
+
+
+let user2 = User{
+	email : String::from("another_email@hotmail.com"),
+	..user
+}
+
+this little fire cracker would handle the rest of the struct for us, so basically we have another struct only with 
+a short modification with less amount of code that is possible (shoutout to this language)
+
+but important point is for data types which doesnt implement "stack-only data:copy" like String fields after
+creating user2 u cannot access user.email because it has moved to user2 but for those datatypes which implement this
+they are still valid in scope
+
+//moved data 
+println!("{}",user.email) //compile time error
+//valid data
+println!("{}",user.active) // run perfectly
+
