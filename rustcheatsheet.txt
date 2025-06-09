@@ -362,3 +362,78 @@ println!("{}",user.email) //compile time error
 //valid data
 println!("{}",user.active) // run perfectly
 
+
+Using Tuple Structs Without Named Fields to Create Different Types =>
+
+struct Color(i32,i32,i32);
+
+fn main(){
+	let orange = Color(0,0,0);
+}
+
+these type of structs are deconstructable =>
+
+let Color(r,g,b) = orange;
+
+Unit-Like Structs Without Any Fields =>
+
+struct AlwaysEqual;
+
+fn main(){
+	let eq = AlwaysEqual;
+}
+
+u can also store string slice &str as field but we do need specify life time otherwise the code wont compile at all
+
+Outer attribute
+one of the most common one is debug which let us print a struct in debug mode=>
+
+#[derive(Debug)]
+struct SomeData{
+	name : String
+}
+
+fn main(){
+	let s = SomeData{
+	
+	};
+	println!("{:?}",s);
+	println!("{s:?}");	
+	//or
+	println!("{:#?}",s);
+	println!("{s:#?}"); //print pretty
+}
+
+another way is to use debug macro =>
+
+#[derive(Debug)]
+struct SomeData{
+	name : String
+}
+fn main(){
+	let s = SomeData{
+		name : String::from("test")
+	};
+	dbg!(&s);
+}
+
+methods are similar to function which will add some functionality to enum, struct and trait objects =>
+
+fn main(){
+    let g = Greeting{
+        name : String::from("Amir")
+    };
+    let msg = g.announce();
+    println!("{msg}");
+}
+
+struct Greeting{
+    name : String
+}
+
+impl Greeting{
+    fn announce(&self) -> String{
+        String::from(format!("Hello to {}",self.name))
+    }
+}
+
