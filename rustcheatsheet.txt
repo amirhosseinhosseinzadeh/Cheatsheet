@@ -437,3 +437,71 @@ impl Greeting{
     }
 }
 
+method dereferencing
+
+n C and C++, two different operators are used for calling methods: you use . if you’re calling a method 
+on the object directly and -> if you’re calling the method on a pointer to the object and need to dereference the pointer first. 
+In other words, if object is a pointer, object->something() is similar to (*object).something().
+
+Here’s how it works: when you call a method with object.something(), Rust automatically adds in &, &mut, or * 
+so object matches the signature of the method. In other words, the following are the same:
+
+--------------------------------
+p1.distance(&p2);
+(&p1).distance(&p2);
+--------------------------------
+
+enums:
+Enums allow you to define a type by enumerating its possible variants
+we’ll look at how pattern matching in the match expression makes it easy to run different code for different values of an enum
+
+enum IpAddrKind{
+	Ipv4,
+	Ipv6
+}
+
+let ip = IpAddrKind::Ipv4;
+let ip_v6 = IpAddrKind::Ipv6;
+
+we also can map a data for each enum value =>
+
+enum RandomType{
+	RandomText(String),
+	RandomPositiveNumber(u32),
+	RandomNumber(i32)
+}
+
+let rnd_type = RandomType::RandomText(String::from("93t4093$T$%T"));
+let rnd_type2 = RandomType::RandomPositiveNumber(9390023 as u32);
+
+were able to define method for enums as well =>
+
+enum Message {
+    TextMessage(String),
+    Media(Vec<u32>),
+}
+
+impl Message {
+    fn new_text_msg(message: String) -> Message {
+        Message::TextMessage(message)
+    }
+    fn new_media_msg(attachment_body: Vec<u32>) -> Message {
+        Message::Media(attachment_body)
+    }
+}
+
+in rust we actually dont have null (what the actual fuck ????????????????????????????????????????????????????????????????????????????)
+they have an alternative way they calls Option which  says a vlue whether is absent or accessible => 
+
+let d : Option<i32> = None;
+let d2 : Option<i32> = Some(222);
+
+the option is an enum which have these two condition of value (absent or reachable) with Some(val) u can fill ur variable 
+
+let d : Option<i32> = None;
+if d > Option(0){
+	//do something
+} // nothing would happen
+
+//continue
+//https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html
