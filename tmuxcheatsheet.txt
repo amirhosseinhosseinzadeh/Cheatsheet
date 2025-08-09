@@ -7,6 +7,7 @@ ctrl + b + z => zoom and zoombac
 ctrl + b + c => create a new tab inside current terminal
 ctrl + b + tabnumber => can change currnt tab
 ctrl + b + d => detach current tab
+tmux list-sessions => cmd that gives list of all open sessions
 tmux att -t [sessionnumber] => after detaching tmux can use this to reattach it again
 ctrl + b + : command 
 ctrl + b + :setw synchoriztion on => it will set all trminals to read one keboard commands 
